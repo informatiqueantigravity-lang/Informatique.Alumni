@@ -20,10 +20,15 @@ public class Graduate : AuditedAggregateRoot<Guid>
     public Graduate(Guid id, string name, string membershipCardNumber, DateTime membershipExpiryDate, decimal openingBalance)
         : base(id)
     {
+        if (openingBalance < 0)
+        {
+            throw new ArgumentException("Opening balance cannot be negative", nameof(openingBalance));
+        }
+        
         Name = name;
         MembershipCardNumber = membershipCardNumber;
         MembershipExpiryDate = membershipExpiryDate;
-        OpeningBalance = openingBalance >= 0 ? openingBalance : 0;
+        OpeningBalance = openingBalance;
     }
     
     public bool IsMembershipActive(DateTime currentDate)

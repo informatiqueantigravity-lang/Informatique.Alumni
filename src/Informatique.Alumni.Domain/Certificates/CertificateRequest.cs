@@ -9,13 +9,13 @@ public class CertificateRequest : AuditedAggregateRoot<Guid>
     
     public decimal TotalFees { get; set; }
     
-    public decimal AmountDeductedFromBalance { get; set; }
+    public decimal AmountDeductedFromBalance { get; private set; }
     
-    public decimal RemainingAmountToPay { get; set; }
+    public decimal RemainingAmountToPay { get; private set; }
     
-    public CertificateRequestStatus Status { get; set; }
+    public CertificateRequestStatus Status { get; private set; }
     
-    public DateTime? SentToOfficeDate { get; set; }
+    public DateTime? SentToOfficeDate { get; private set; }
     
     protected CertificateRequest()
     {

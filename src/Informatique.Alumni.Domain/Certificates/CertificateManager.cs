@@ -43,10 +43,7 @@ public class CertificateManager : DomainService
         decimal amountDeductedFromBalance;
         decimal remainingAmountToPay;
         
-        // Ensure we only work with non-negative balances
-        var availableBalance = Math.Max(0, graduate.OpeningBalance);
-        
-        if (availableBalance >= totalFees)
+        if (graduate.OpeningBalance >= totalFees)
         {
             // Balance is sufficient to cover the entire fee
             amountDeductedFromBalance = totalFees;
@@ -55,8 +52,8 @@ public class CertificateManager : DomainService
         else
         {
             // Balance is insufficient, use what's available and calculate remaining
-            amountDeductedFromBalance = availableBalance;
-            remainingAmountToPay = totalFees - availableBalance;
+            amountDeductedFromBalance = graduate.OpeningBalance;
+            remainingAmountToPay = totalFees - graduate.OpeningBalance;
         }
         
         return new FinancialCalculationResult
@@ -110,11 +107,20 @@ public class CertificateManager : DomainService
             throw new InsufficientPaymentException(certificateRequest.TotalFees, totalPaidAmount);
         }
         
+        // Verify that the graduate still has sufficient balance
+        // (balance may have changed since request creation)
+        if (graduate.OpeningBalance < certificateRequest.AmountDeductedFromBalance)
+        {
+            throw new InvalidOperationException(
+                $"Graduate's current balance ({graduate.OpeningBalance}) is insufficient to deduct the planned amount ({certificateRequest.AmountDeductedFromBalance}). " +
+                "The balance may have changed since the request was created.");
+        }
+        
         // Deduct from graduate's opening balance using the domain method
         graduate.DeductFromBalance(certificateRequest.AmountDeductedFromBalance);
         await _graduateRepository.UpdateAsync(graduate);
         
-        // Mark as sent to office (no need to update financial details again)
+        // Mark as sent to office
         certificateRequest.MarkAsSentToOffice();
         await _certificateRequestRepository.UpdateAsync(certificateRequest);
     }
