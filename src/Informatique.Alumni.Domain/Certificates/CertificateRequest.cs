@@ -37,6 +37,10 @@ public class CertificateRequest : FullAuditedAggregateRoot<Guid>
         DeliveryMethod deliveryMethod,
         decimal totalAmount = 0) : base(id)
     {
+        Check.NotNull(graduateId, nameof(graduateId));
+        Check.NotNull(branchId, nameof(branchId));
+        Check.Range(totalAmount, nameof(totalAmount), 0, decimal.MaxValue);
+
         GraduateId = graduateId;
         BranchId = branchId;
         PaymentMethod = paymentMethod;

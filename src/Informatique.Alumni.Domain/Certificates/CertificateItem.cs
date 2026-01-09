@@ -1,4 +1,5 @@
 using System;
+using Volo.Abp;
 using Volo.Abp.Domain.Entities;
 
 namespace Informatique.Alumni.Certificates;
@@ -25,6 +26,10 @@ public class CertificateItem : Entity<Guid>
         CertificateLanguage language,
         int quantity = 1) : base(id)
     {
+        Check.NotNull(qualificationId, nameof(qualificationId));
+        Check.NotNull(certificateTypeId, nameof(certificateTypeId));
+        Check.Positive(quantity, nameof(quantity));
+
         QualificationId = qualificationId;
         CertificateTypeId = certificateTypeId;
         Language = language;
