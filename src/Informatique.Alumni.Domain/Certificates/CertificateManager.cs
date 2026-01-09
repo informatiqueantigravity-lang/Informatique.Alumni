@@ -26,7 +26,7 @@ public class CertificateManager : DomainService
     {
         var graduate = await _graduateRepository.GetAsync(graduateId);
         
-        if (!graduate.IsMembershipActive)
+        if (!graduate.IsMembershipActive(DateTime.UtcNow))
         {
             throw new InactiveMembershipException(graduate.MembershipCardNumber);
         }
@@ -43,7 +43,10 @@ public class CertificateManager : DomainService
         decimal amountDeductedFromBalance;
         decimal remainingAmountToPay;
         
-        if (graduate.OpeningBalance >= totalFees)
+        // Ensure we only work with non-negative balances
+        var availableBalance = Math.Max(0, graduate.OpeningBalance);
+        
+        if (availableBalance >= totalFees)
         {
             // Balance is sufficient to cover the entire fee
             amountDeductedFromBalance = totalFees;
@@ -52,8 +55,8 @@ public class CertificateManager : DomainService
         else
         {
             // Balance is insufficient, use what's available and calculate remaining
-            amountDeductedFromBalance = graduate.OpeningBalance;
-            remainingAmountToPay = totalFees - graduate.OpeningBalance;
+            amountDeductedFromBalance = availableBalance;
+            remainingAmountToPay = totalFees - availableBalance;
         }
         
         return new FinancialCalculationResult
@@ -107,20 +110,11 @@ public class CertificateManager : DomainService
             throw new InsufficientPaymentException(certificateRequest.TotalFees, totalPaidAmount);
         }
         
-        // Deduct from graduate's opening balance
-        graduate.OpeningBalance -= certificateRequest.AmountDeductedFromBalance;
+        // Deduct from graduate's opening balance using the domain method
+        graduate.DeductFromBalance(certificateRequest.AmountDeductedFromBalance);
         await _graduateRepository.UpdateAsync(graduate);
         
-        // Update the certificate request with final payment details
-        if (externalPaymentAmount.HasValue && externalPaymentAmount.Value > 0)
-        {
-            certificateRequest.SetFinancialDetails(
-                certificateRequest.AmountDeductedFromBalance,
-                externalPaymentAmount.Value
-            );
-        }
-        
-        // Mark as sent to office
+        // Mark as sent to office (no need to update financial details again)
         certificateRequest.MarkAsSentToOffice();
         await _certificateRequestRepository.UpdateAsync(certificateRequest);
     }

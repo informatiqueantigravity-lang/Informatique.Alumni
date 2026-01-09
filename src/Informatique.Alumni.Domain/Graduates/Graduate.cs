@@ -11,9 +11,7 @@ public class Graduate : AuditedAggregateRoot<Guid>
     
     public DateTime MembershipExpiryDate { get; set; }
     
-    public bool IsMembershipActive => DateTime.UtcNow <= MembershipExpiryDate;
-    
-    public decimal OpeningBalance { get; set; }
+    public decimal OpeningBalance { get; private set; }
     
     protected Graduate()
     {
@@ -25,6 +23,26 @@ public class Graduate : AuditedAggregateRoot<Guid>
         Name = name;
         MembershipCardNumber = membershipCardNumber;
         MembershipExpiryDate = membershipExpiryDate;
-        OpeningBalance = openingBalance;
+        OpeningBalance = openingBalance >= 0 ? openingBalance : 0;
+    }
+    
+    public bool IsMembershipActive(DateTime currentDate)
+    {
+        return currentDate <= MembershipExpiryDate;
+    }
+    
+    public void DeductFromBalance(decimal amount)
+    {
+        if (amount < 0)
+        {
+            throw new ArgumentException("Amount to deduct cannot be negative", nameof(amount));
+        }
+        
+        if (amount > OpeningBalance)
+        {
+            throw new InvalidOperationException("Cannot deduct more than the current opening balance");
+        }
+        
+        OpeningBalance -= amount;
     }
 }
