@@ -1,0 +1,88 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXLiteTheme": {
+      "version": "5.0.1",
+      "isInstalled": true,
+      "creationTime": "01/08/2026 20:05:19 +00:00"
+    },
+    "Volo.Abp.Account": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/08/2026 20:05:19 +00:00"
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/08/2026 20:05:19 +00:00"
+    },
+    "Volo.Abp.Identity": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/08/2026 20:05:19 +00:00"
+    },
+    "Volo.Abp.TenantManagement": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/08/2026 20:05:19 +00:00"
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/08/2026 20:05:19 +00:00"
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/08/2026 20:05:19 +00:00"
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/08/2026 20:05:19 +00:00"
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {}
+    }
+  },
+  "packages": {
+    "Informatique.Alumni.Application": {
+      "path": "src/Informatique.Alumni.Application/Informatique.Alumni.Application.abppkg",
+      "folder": "src"
+    },
+    "Informatique.Alumni.Domain.Shared": {
+      "path": "src/Informatique.Alumni.Domain.Shared/Informatique.Alumni.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "Informatique.Alumni.Application.Contracts": {
+      "path": "src/Informatique.Alumni.Application.Contracts/Informatique.Alumni.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "Informatique.Alumni.HttpApi": {
+      "path": "src/Informatique.Alumni.HttpApi/Informatique.Alumni.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "Informatique.Alumni.HttpApi.Client": {
+      "path": "src/Informatique.Alumni.HttpApi.Client/Informatique.Alumni.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "Informatique.Alumni.EntityFrameworkCore": {
+      "path": "src/Informatique.Alumni.EntityFrameworkCore/Informatique.Alumni.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "Informatique.Alumni.DbMigrator": {
+      "path": "src/Informatique.Alumni.DbMigrator/Informatique.Alumni.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "Informatique.Alumni.HttpApi.Host": {
+      "path": "src/Informatique.Alumni.HttpApi.Host/Informatique.Alumni.HttpApi.Host.abppkg",
+      "folder": "src"
+    },
+    "Informatique.Alumni.Domain": {
+      "path": "src/Informatique.Alumni.Domain/Informatique.Alumni.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}

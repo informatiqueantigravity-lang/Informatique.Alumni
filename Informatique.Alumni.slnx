@@ -1,0 +1,16 @@
+<Solution>
+    <Configurations>
+        <Platform Name="Any CPU" />
+    </Configurations>
+    <Folder Name="/src/">
+        <Project Path="src/Informatique.Alumni.Domain/Informatique.Alumni.Domain.csproj" />
+        <Project Path="src/Informatique.Alumni.Application/Informatique.Alumni.Application.csproj" />
+        <Project Path="src/Informatique.Alumni.EntityFrameworkCore/Informatique.Alumni.EntityFrameworkCore.csproj" />
+        <Project Path="src/Informatique.Alumni.Domain.Shared/Informatique.Alumni.Domain.Shared.csproj" />
+        <Project Path="src/Informatique.Alumni.Application.Contracts/Informatique.Alumni.Application.Contracts.csproj" />
+        <Project Path="src/Informatique.Alumni.HttpApi/Informatique.Alumni.HttpApi.csproj" />
+        <Project Path="src/Informatique.Alumni.HttpApi.Client/Informatique.Alumni.HttpApi.Client.csproj" />
+        <Project Path="src/Informatique.Alumni.DbMigrator/Informatique.Alumni.DbMigrator.csproj" />
+        <Project Path="src/Informatique.Alumni.HttpApi.Host/Informatique.Alumni.HttpApi.Host.csproj" />
+    </Folder>
+</Solution>
