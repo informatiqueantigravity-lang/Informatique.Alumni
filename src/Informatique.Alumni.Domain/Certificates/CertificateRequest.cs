@@ -37,8 +37,10 @@ public class CertificateRequest : FullAuditedAggregateRoot<Guid>
         DeliveryMethod deliveryMethod,
         decimal totalAmount = 0) : base(id)
     {
-        Check.NotNull(graduateId, nameof(graduateId));
-        Check.NotNull(branchId, nameof(branchId));
+        if (graduateId == Guid.Empty)
+            throw new ArgumentException("Value cannot be empty.", nameof(graduateId));
+        if (branchId == Guid.Empty)
+            throw new ArgumentException("Value cannot be empty.", nameof(branchId));
         Check.Range(totalAmount, nameof(totalAmount), 0, decimal.MaxValue);
 
         GraduateId = graduateId;

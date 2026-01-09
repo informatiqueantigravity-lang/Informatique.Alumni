@@ -26,8 +26,10 @@ public class CertificateItem : Entity<Guid>
         CertificateLanguage language,
         int quantity = 1) : base(id)
     {
-        Check.NotNull(qualificationId, nameof(qualificationId));
-        Check.NotNull(certificateTypeId, nameof(certificateTypeId));
+        if (qualificationId == Guid.Empty)
+            throw new ArgumentException("Value cannot be empty.", nameof(qualificationId));
+        if (certificateTypeId == Guid.Empty)
+            throw new ArgumentException("Value cannot be empty.", nameof(certificateTypeId));
         Check.Positive(quantity, nameof(quantity));
 
         QualificationId = qualificationId;
